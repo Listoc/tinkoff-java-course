@@ -30,7 +30,7 @@ public class Task6Test {
 
     @Test
     @DisplayName("Число вне диапазона")
-    void higherInput() {
+    void lowerInput() {
         assertThat(countK(123)).isEqualTo(-1);
     }
 
