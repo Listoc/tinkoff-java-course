@@ -14,9 +14,19 @@ public class Task1Test {
 
     @Test
     @DisplayName("Правильный ввод mm:ss")
-    void properInput() {
+    void properInput1() {
         assertThat(minuteToSeconds("20:30")).isEqualTo(1230);
+    }
+
+    @Test
+    @DisplayName("Правильный ввод mm:ss")
+    void properInput2() {
         assertThat(minuteToSeconds("120:59")).isEqualTo(7259);
+    }
+
+    @Test
+    @DisplayName("Правильный ввод mm:ss")
+    void properInput3() {
         assertThat(minuteToSeconds("00:01")).isEqualTo(1);
     }
 
@@ -27,18 +37,38 @@ public class Task1Test {
     }
 
     @Test
-    @DisplayName("Некорректные строки")
-    void wrongStrings() {
+    @DisplayName("Некорректная строка")
+    void wrongString1() {
         assertThat(minuteToSeconds("abracadabra")).isEqualTo(-1);
+    }
+
+    @Test
+    @DisplayName("Некорректная строка")
+    void wrongString2() {
         assertThat(minuteToSeconds("20:20:20")).isEqualTo(-1);
+    }
+
+    @Test
+    @DisplayName("Некорректная строка")
+    void wrongString3() {
         assertThat(minuteToSeconds("-10:-10")).isEqualTo(-1);
     }
 
     @Test
     @DisplayName("Недостаточно знаков")
-    void tooLowDigits() {
+    void tooLowDigits1() {
         assertThat(minuteToSeconds("1:1")).isEqualTo(-1);
+    }
+
+    @Test
+    @DisplayName("Недостаточно знаков")
+    void tooLowDigits2() {
         assertThat(minuteToSeconds("01:1")).isEqualTo(-1);
+    }
+
+    @Test
+    @DisplayName("Недостаточно знаков")
+    void tooLowDigits3() {
         assertThat(minuteToSeconds("1:01")).isEqualTo(-1);
     }
 

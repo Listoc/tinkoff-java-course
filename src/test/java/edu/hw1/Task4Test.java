@@ -8,11 +8,22 @@ import static edu.hw1.Task4.fixString;
 public class Task4Test {
 
     @Test
-    @DisplayName("Нормальный ввод")
-    void properInput() {
+    void properInput1() {
         assertThat(fixString("123456")).isEqualTo("214365");
+    }
+
+    @Test
+    void properInput2() {
         assertThat(fixString("hTsii  s aimex dpus rtni.g")).isEqualTo("This is a mixed up string.");
+    }
+
+    @Test
+    void properInput3() {
         assertThat(fixString("badce")).isEqualTo("abcde");
+    }
+
+    @Test
+    void properInput4() {
         assertThat(fixString("ab")).isEqualTo("ba");
     }
 
