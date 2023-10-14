@@ -20,7 +20,7 @@ public class Task5 {
     }
 
     private static boolean isPalindrome(int number) {
-        char[] numberArray = (String.valueOf(number)).toCharArray();
+        char[] numberArray = String.valueOf(number).toCharArray();
         int i = 0;
         int j = numberArray.length - 1;
         while (i < j) {
