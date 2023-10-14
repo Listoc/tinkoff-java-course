@@ -1,6 +1,7 @@
 package edu.hw1;
 
 public class Task5 {
+    private static final int TEN = 10;
 
     public static boolean isPalindromeDescendant(int number) {
         return isPalindromeDescendantRecursion(Math.abs(number));
@@ -19,7 +20,7 @@ public class Task5 {
     }
 
     private static boolean isPalindrome(int number) {
-        char[] numberArray = (number + "").toCharArray();
+        char[] numberArray = (String.valueOf(number)).toCharArray();
         int i = 0;
         int j = numberArray.length - 1;
         while (i < j) {
@@ -34,15 +35,12 @@ public class Task5 {
     }
 
     private static int getDescendant(int number) {
-        int multiplier = 1;
-        int descendant = 0;
+        StringBuilder descendant = new StringBuilder();
         int numberCopy = number;
         int digit;
-        final int TEN = 10;
 
         if (Task2.countDigits(number) % 2 == 1) {
-            multiplier = TEN;
-            descendant = numberCopy % TEN;
+            descendant.append(numberCopy % TEN);
             numberCopy /= TEN;
         }
 
@@ -52,15 +50,10 @@ public class Task5 {
             digit += numberCopy % TEN;
             numberCopy /= TEN;
 
-            descendant += digit * multiplier;
-
-            multiplier *= TEN;
-            if (Task2.countDigits(digit) == 2) {
-                multiplier *= TEN;
-            }
+            descendant.insert(0, digit);
         }
 
-        return descendant;
+        return Integer.parseInt(descendant.toString());
     }
 
     private Task5() {}
