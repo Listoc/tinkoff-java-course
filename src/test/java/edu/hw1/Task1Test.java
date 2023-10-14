@@ -72,4 +72,22 @@ public class Task1Test {
         assertThat(minuteToSeconds("1:01")).isEqualTo(-1);
     }
 
+    @Test
+    @DisplayName("Корректный формат, но вместо чисел строки")
+    void wrongString4() {
+        assertThat(minuteToSeconds("01:ab")).isEqualTo(-1);
+    }
+
+    @Test
+    @DisplayName("Корректный формат, но вместо чисел строки")
+    void wrongString5() {
+        assertThat(minuteToSeconds("dasbd:01")).isEqualTo(-1);
+    }
+
+    @Test
+    @DisplayName("Корректный формат, но вместо чисел строки")
+    void wrongString6() {
+        assertThat(minuteToSeconds("dasbd:ab")).isEqualTo(-1);
+    }
+
 }
