@@ -1,6 +1,5 @@
 package edu.hw2.task3;
 
-import edu.hw2.task3.connection.Connection;
 import edu.hw2.task3.exception.ConnectionException;
 import edu.hw2.task3.manager.ConnectionManager;
 
@@ -14,9 +13,8 @@ public final class PopularCommandExecutor {
     }
 
     public void tryExecute(String command) throws Exception {
-        Connection connection = manager.getConnection();
         for (int i = 0; i < maxAttempts; ++i) {
-            try {
+            try (var connection = manager.getConnection()) {
                 connection.execute(command);
                 break;
             } catch (ConnectionException e) {
@@ -25,6 +23,5 @@ public final class PopularCommandExecutor {
                 }
             }
         }
-        connection.close();
     }
 }
