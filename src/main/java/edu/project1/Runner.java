@@ -7,9 +7,13 @@ import org.apache.logging.log4j.Logger;
 public class Runner {
     private final static Logger LOGGER = LogManager.getLogger();
     private final static int MAX_ATTEMPTS = 5;
+    private final Dictionary dictionary;
+
+    public Runner(Dictionary dictionary) {
+        this.dictionary = dictionary;
+    }
 
     public void run() {
-        var dictionary = new Dictionary();
         Session session;
         LOGGER.info("Добро пожаловать в виселицу!");
         LOGGER.info("Если вы хотите досрочно остановить сессию, то введите слово \"стоп\"");
@@ -43,9 +47,10 @@ public class Runner {
         return choice.equalsIgnoreCase("y");
     }
 
-//    public static void main(String[] args) {
-//        var runner = new Runner();
-//
-//        runner.run();
-//    }
+    public static void main(String[] args) {
+        var dictionary = new Dictionary();
+        var runner = new Runner(dictionary);
+
+        runner.run();
+    }
 }
