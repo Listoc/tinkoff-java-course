@@ -12,7 +12,7 @@ public class Dictionary {
         listOfWords.add("Basica");
     }
 
-    public Dictionary(Iterable<String> source) {
+    public Dictionary(List<String> source) {
         if (source == null) {
             throw new IllegalArgumentException("Null input");
         }
