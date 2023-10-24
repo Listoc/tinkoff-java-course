@@ -47,10 +47,10 @@ public class Runner {
         return choice.equalsIgnoreCase("y");
     }
 
-    public static void main(String[] args) {
-        var dictionary = new Dictionary();
-        var runner = new Runner(dictionary);
-
-        runner.run();
-    }
+//    public static void main(String[] args) {
+//        var dictionary = new Dictionary();
+//        var runner = new Runner(dictionary);
+//
+//        runner.run();
+//    }
 }
