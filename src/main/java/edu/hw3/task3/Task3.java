@@ -13,11 +13,7 @@ public class Task3 {
         }
 
         for (var el : input) {
-            if (map.containsKey(el)) {
-                map.put(el, map.get(el) + 1);
-            } else {
-                map.put(el, 1);
-            }
+            map.merge(el, 1, Integer::sum);
         }
 
         return map;
