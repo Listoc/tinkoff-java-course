@@ -5,7 +5,21 @@ import java.util.Comparator;
 public class Task7 {
 
     public static <T extends Comparable<T>> Comparator<T> getNullComparator() {
-        return Comparator.nullsFirst(Comparable::compareTo);
+        return (o1, o2) -> {
+            if (o1 == null && o2 == null) {
+                return 0;
+            }
+
+            if (o1 == null) {
+                return -1;
+            }
+
+            if (o2 == null) {
+                return 1;
+            }
+
+            return o1.compareTo(o2);
+        };
     }
 
     private Task7() {}
