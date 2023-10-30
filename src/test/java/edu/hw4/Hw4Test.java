@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class Hw4Test {
     private final static List<Animal> animalList;
@@ -20,13 +20,13 @@ public class Hw4Test {
         true
     );
 
-    private final static Animal animalVasyan = new Animal(
-        "Vasyan",
+    private final static Animal animalCountOfMonteCristo = new Animal(
+        "Count of Monte Cristo",
         Animal.Type.DOG,
         Animal.Sex.M,
         5,
         120,
-        30,
+        130,
         true
     );
 
@@ -37,7 +37,7 @@ public class Hw4Test {
         2,
         30,
         5,
-        false
+        true
     );
 
     private final static Animal animalKatya = new Animal(
@@ -47,13 +47,13 @@ public class Hw4Test {
         40,
         110,
         60,
-        true
+        false
     );
 
     static {
         animalList = new LinkedList<>();
         animalList.add(animalIvan);
-        animalList.add(animalVasyan);
+        animalList.add(animalCountOfMonteCristo);
         animalList.add(animalIkar);
         animalList.add(animalKatya);
     }
@@ -62,7 +62,7 @@ public class Hw4Test {
     class Task1Test {
         @Test
         void properInput() {
-            var expected = List.of(animalIkar, animalIvan, animalKatya, animalVasyan);
+            var expected = List.of(animalIkar, animalIvan, animalKatya, animalCountOfMonteCristo);
 
             assertThat(Hw4.sortByHeightAsc(animalList)).isEqualTo(expected);
         }
@@ -72,7 +72,7 @@ public class Hw4Test {
     class Task2Test {
         @Test
         void properInput() {
-            var expected = List.of(animalKatya, animalVasyan, animalIvan, animalIkar);
+            var expected = List.of(animalCountOfMonteCristo, animalKatya, animalIvan, animalIkar);
 
             assertThat(Hw4.sortByWeightDesc(animalList)).isEqualTo(expected);
         }
@@ -92,7 +92,7 @@ public class Hw4Test {
     class Task4Test {
         @Test
         void properInput() {
-            assertThat(Hw4.getAnimalWithLongestName(animalList)).isEqualTo(animalVasyan);
+            assertThat(Hw4.getAnimalWithLongestName(animalList)).isEqualTo(animalCountOfMonteCristo);
         }
     }
 
@@ -109,7 +109,7 @@ public class Hw4Test {
         @Test
         void properInput() {
             var map = new HashMap<Animal.Type, Animal>();
-            map.put(Animal.Type.DOG, animalVasyan);
+            map.put(Animal.Type.DOG, animalCountOfMonteCristo);
             map.put(Animal.Type.FISH, animalKatya);
             map.put(Animal.Type.BIRD, animalIkar);
             assertThat(Hw4.getHeaviestAnimalOfEachType(animalList)).isEqualTo(map);
@@ -141,6 +141,84 @@ public class Hw4Test {
         @Test
         void noSuchAnimals() {
             assertThat(Hw4.getHeaviestAnimalLowerThanKCm(animalList, 5).isPresent()).isEqualTo(false);
+        }
+    }
+
+    @Nested
+    class Task9Test {
+        @Test
+        void properInput() {
+            assertThat(Hw4.getCountOfPaws(animalList)).isEqualTo(10);
+        }
+    }
+
+    @Nested
+    class Task10Test {
+        List<Animal> expected = List.of(animalKatya, animalCountOfMonteCristo, animalIvan);
+        @Test
+        void properInput() {
+            assertThat(Hw4.getAnimalsPawsNotEqualsAge(animalList)).containsExactlyInAnyOrderElementsOf(expected);
+        }
+    }
+
+    @Nested
+    class Task11Test {
+        List<Animal> expected = List.of(animalCountOfMonteCristo);
+        @Test
+        void properInput() {
+            assertThat(Hw4.getAnimalsThatBitesAndHeightOver100CM(animalList)).containsExactlyInAnyOrderElementsOf(expected);
+        }
+    }
+
+    @Nested
+    class Task12Test {
+        @Test
+        void properInput() {
+            assertThat(Hw4.getCountOfAnimalsWeightOverHeight(animalList)).isEqualTo(1);
+        }
+    }
+
+    @Nested
+    class Task13Test {
+        List<Animal> expected = List.of(animalCountOfMonteCristo);
+        @Test
+        void properInput() {
+            assertThat(Hw4.getAnimalsMoreThanTwoWordInName(animalList)).containsExactlyInAnyOrderElementsOf(expected);
+        }
+    }
+
+    @Nested
+    class Task14Test {
+        @Test
+        void properTrueInput() {
+            assertThat(Hw4.isHereDogWithHeightOverKCM(animalList, 100)).isTrue();
+        }
+
+        @Test
+        void properFalseInput() {
+            assertThat(Hw4.isHereDogWithHeightOverKCM(animalList, 200)).isFalse();
+        }
+    }
+
+    @Nested
+    class Task15Test {
+        @Test
+        void properInput() {
+            assertThat(Hw4.getSummaryWeightOfAllAnimalsFromKToLAge(animalList, 5, 30)).isEqualTo(150);
+        }
+
+        @Test
+        void noSuchAnimals() {
+            assertThat(Hw4.getSummaryWeightOfAllAnimalsFromKToLAge(animalList, 1, 1)).isEqualTo(0);
+        }
+    }
+
+    @Nested
+    class Task16Test {
+        @Test
+        void properInput() {
+            List<Animal> expected = List.of(animalCountOfMonteCristo, animalIvan, animalIkar, animalKatya);
+            assertThat(Hw4.sortByTypeThenSexThenName(animalList)).isEqualTo(expected);
         }
     }
 }
