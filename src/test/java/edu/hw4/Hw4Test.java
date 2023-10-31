@@ -3,9 +3,11 @@ package edu.hw4;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class Hw4Test {
@@ -190,12 +192,12 @@ public class Hw4Test {
     @Nested
     class Task14Test {
         @Test
-        void properTrueInput() {
+        void properInputForTrue() {
             assertThat(Hw4.isHereDogWithHeightOverKCM(animalList, 100)).isTrue();
         }
 
         @Test
-        void properFalseInput() {
+        void properInputForFalse() {
             assertThat(Hw4.isHereDogWithHeightOverKCM(animalList, 200)).isFalse();
         }
     }
@@ -219,6 +221,128 @@ public class Hw4Test {
         void properInput() {
             List<Animal> expected = List.of(animalCountOfMonteCristo, animalIvan, animalIkar, animalKatya);
             assertThat(Hw4.sortByTypeThenSexThenName(animalList)).isEqualTo(expected);
+        }
+    }
+
+    @Nested
+    class Task17Test {
+        @Test
+        void properInputForFalse() {
+            assertThat(Hw4.doSpidersBitesOftenThenDogs(animalList)).isFalse();
+        }
+
+        @Test
+        void properInputForTrue() {
+            List<Animal> test = List.of(
+                animalIvan,
+                animalIkar,
+                new Animal("Oleg", Animal.Type.SPIDER, Animal.Sex.M, 1, 1, 1, true),
+                new Animal("Vasya", Animal.Type.SPIDER, Animal.Sex.M, 1, 1, 1, true));
+            assertThat(Hw4.doSpidersBitesOftenThenDogs(test)).isTrue();
+        }
+
+        @Test
+        void properInputEqualsCount() {
+            List<Animal> test = List.of(
+                animalIvan,
+                animalCountOfMonteCristo,
+                new Animal("Oleg", Animal.Type.SPIDER, Animal.Sex.M, 1, 1, 1, true),
+                new Animal("Vasya", Animal.Type.SPIDER, Animal.Sex.M, 1, 1, 1, true));
+            assertThat(Hw4.doSpidersBitesOftenThenDogs(test)).isFalse();
+        }
+    }
+
+    @Nested
+    class Task18Test {
+        @Test
+        void properInputFound() {
+            var fish1 = getFish(5);
+            var fish2 = getFish(70);
+            var fish3 = getFish(15);
+
+            List<List<Animal>> input = List.of(
+                List.of(animalIkar, animalIvan),
+                List.of(fish1, animalKatya, fish2),
+                List.of(animalCountOfMonteCristo, fish3)
+            );
+
+            assertThat(Hw4.getHeaviestFishFromAnimalsLists(input)).isEqualTo(fish2);
+        }
+
+        @Test
+        void properInputNotFound() {
+            List<List<Animal>> input = List.of(
+                List.of(animalIkar, animalIvan),
+                List.of(animalCountOfMonteCristo)
+            );
+
+            assertThat(Hw4.getHeaviestFishFromAnimalsLists(input)).isEqualTo(null);
+        }
+
+        public static Animal getFish(int weight) {
+            return new Animal(
+                "Test",
+                Animal.Type.FISH,
+                Animal.Sex.M,
+                1,
+                1,
+                weight,
+                false
+            );
+        }
+    }
+
+    @Nested
+    class Task19Test {
+        private final List<Animal> input = List.of(
+            animalIkar,
+            new Animal("", Animal.Type.FISH, Animal.Sex.M, 1, 1, 1, true),
+            new Animal("Test", Animal.Type.FISH, null, 1, 1, 1, true),
+            new Animal("Test2", Animal.Type.FISH, null, -1, 1, 1, true)
+        );
+
+        @Test
+        void properInput() {
+            Set<ValidationError> set;
+            var expected = new HashMap<String, Set<ValidationError>>();
+
+            set = new HashSet<>();
+            set.add(new ValidationError("name: empty name"));
+            expected.put("", set);
+
+            set = new HashSet<>();
+            set.add(new ValidationError("sex: null sex"));
+            expected.put("Test", set);
+
+            set = new HashSet<>();
+            set.add(new ValidationError("sex: null sex"));
+            set.add(new ValidationError("age: negative age"));
+            expected.put("Test2", set);
+
+            assertThat(Hw4.getAnimalsWithErrorsSet(input)).isEqualTo(expected);
+        }
+    }
+
+    @Nested
+    class Task20Test {
+        private final List<Animal> input = List.of(
+            animalIkar,
+            new Animal("", Animal.Type.FISH, Animal.Sex.M, 1, 1, 1, true),
+            new Animal("Test", Animal.Type.FISH, null, 1, 1, 1, true),
+            new Animal("Test2", Animal.Type.FISH, null, -1, 1, 1, true)
+        );
+
+        @Test
+        void properInput() {
+            var expected = new HashMap<String, String>();
+
+            expected.put("", "name: empty name\n");
+
+            expected.put("Test", "sex: null sex\n");
+
+            expected.put("Test2", "age: negative age\nsex: null sex\n");
+
+            assertThat(Hw4.getAnimalsWithErrorsString(input)).isEqualTo(expected);
         }
     }
 }

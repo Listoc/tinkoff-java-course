@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Hw4 {
@@ -107,6 +108,68 @@ public class Hw4 {
                     .thenComparing(Animal::name)
             )
             .toList();
+    }
+
+    //Task17
+    public static boolean doSpidersBitesOftenThenDogs(List<Animal> animalList) {
+        var map = animalList.stream()
+            .filter(Animal::bites)
+            .collect(
+                Collectors.groupingBy(Animal::type, Collectors.counting())
+            );
+
+        return map.getOrDefault(Animal.Type.SPIDER, 0L) > map.getOrDefault(Animal.Type.DOG, 0L);
+    }
+
+    //Task18
+    public static Animal getHeaviestFishFromAnimalsLists(List<List<Animal>> animalList) {
+        boolean found = false;
+        Animal max = new Animal("", Animal.Type.FISH, Animal.Sex.M, 1, 1, 0, false);
+        Optional<Animal> current;
+
+        for (var list : animalList) {
+            current = list.stream()
+                .filter((a) -> a.type() == Animal.Type.FISH)
+                .max(Comparator.comparingInt(Animal::weight));
+
+            if (current.isPresent() && current.get().weight() > max.weight()) {
+                max = current.get();
+                found = true;
+            }
+        }
+
+        return found ? max : null;
+    }
+
+
+    //Task19
+    public static Map<String, Set<ValidationError>> getAnimalsWithErrorsSet(List<Animal> animalList) {
+        Validator validator = new MyValidator();
+        return animalList.stream()
+            .collect(Collectors.toMap(Animal::name, validator::validate))
+            .entrySet()
+            .stream()
+            .filter((entry) -> !entry.getValue().isEmpty())
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    //Task20
+    public static Map<String, String> getAnimalsWithErrorsString(List<Animal> animalList) {
+        return getAnimalsWithErrorsSet(animalList)
+            .entrySet()
+            .stream()
+            .collect(
+                Collectors.toMap(Map.Entry::getKey, (entry) -> setToString(entry.getValue()))
+            );
+    }
+
+    private static String setToString(Set<ValidationError> set) {
+        var builder = new StringBuilder();
+        for (var el : set) {
+            builder.append(el.toString());
+            builder.append("\n");
+        }
+        return builder.toString();
     }
 
     private Hw4() {}
