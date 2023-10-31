@@ -16,8 +16,8 @@ public class Hw4 {
     }
 
     //Task2
-    public static List<Animal> sortByWeightDesc(List<Animal> animalsList) {
-        return animalsList.stream().sorted(Comparator.comparingInt(Animal::weight).reversed()).toList();
+    public static List<Animal> sortByWeightDesc(List<Animal> animalsList, int k) {
+        return animalsList.stream().sorted(Comparator.comparingInt(Animal::weight).reversed()).limit(k).toList();
     }
 
     //Task3

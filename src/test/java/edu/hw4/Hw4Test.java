@@ -74,9 +74,16 @@ public class Hw4Test {
     class Task2Test {
         @Test
         void properInput() {
+            var expected = List.of(animalCountOfMonteCristo, animalKatya, animalIvan);
+
+            assertThat(Hw4.sortByWeightDesc(animalList, 3)).isEqualTo(expected);
+        }
+
+        @Test
+        void limitOverSizeInput() {
             var expected = List.of(animalCountOfMonteCristo, animalKatya, animalIvan, animalIkar);
 
-            assertThat(Hw4.sortByWeightDesc(animalList)).isEqualTo(expected);
+            assertThat(Hw4.sortByWeightDesc(animalList, 5)).isEqualTo(expected);
         }
     }
 
