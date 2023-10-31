@@ -55,8 +55,12 @@ public class Hw4 {
     }
 
     //Task7
-    public static Animal getOldestAnimal(List<Animal> animalsList) {
-        return animalsList.stream().max(Comparator.comparingInt(Animal::age)).orElseThrow();
+    public static Animal getKOldestAnimal(List<Animal> animalsList, int k) {
+        if (k > animalsList.size()) {
+            return null;
+        }
+        return animalsList.stream()
+            .sorted(Comparator.comparingInt(Animal::age).reversed()).toArray(Animal[]::new)[k - 1];
     }
 
     //Task8

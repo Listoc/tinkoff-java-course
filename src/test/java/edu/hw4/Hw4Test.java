@@ -121,8 +121,18 @@ public class Hw4Test {
     @Nested
     class Task7Test {
         @Test
-        void properInput() {
-            assertThat(Hw4.getOldestAnimal(animalList)).isEqualTo(animalKatya);
+        void properInput1() {
+            assertThat(Hw4.getKOldestAnimal(animalList, 1)).isEqualTo(animalKatya);
+        }
+
+        @Test
+        void properInput2() {
+            assertThat(Hw4.getKOldestAnimal(animalList, 3)).isEqualTo(animalCountOfMonteCristo);
+        }
+
+        @Test
+        void wrongInput() {
+            assertThat(Hw4.getKOldestAnimal(animalList, 6)).isEqualTo(null);
         }
     }
 
