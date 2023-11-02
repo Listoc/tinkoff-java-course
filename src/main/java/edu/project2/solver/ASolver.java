@@ -40,7 +40,7 @@ public class ASolver implements Solver {
         var currentNode = new SearchNode(root);
         List<SearchNode> neighbors;
 
-        currentNode.setPriority(goal);
+        currentNode.setPriorityAStar(goal);
         queue.add(currentNode);
         visited.add(currentNode);
 
@@ -54,7 +54,7 @@ public class ASolver implements Solver {
             neighbors = currentNode.findNeighbors(maze);
             for (var neighbor : neighbors) {
                 if (!visited.contains(neighbor)) {
-                    neighbor.setPriority(goal);
+                    neighbor.setPriorityAStar(goal);
                     queue.add(neighbor);
                     visited.add(neighbor);
                 }
