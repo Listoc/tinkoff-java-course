@@ -17,6 +17,9 @@ public class PrettyPrinter implements Printer {
     }
 
     private void printMazeShared(Maze maze, List<Cell> path) {
+        if (maze == null) {
+            throw new IllegalArgumentException("Null maze");
+        }
         System.out.println(getTopBorder(maze.getWidth()));
 
         for (int i = 0; i < maze.getHeight(); ++i) {
