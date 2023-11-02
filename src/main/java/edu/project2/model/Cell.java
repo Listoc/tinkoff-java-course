@@ -39,11 +39,11 @@ public class Cell {
     }
 
     @Override public String toString() {
-        return "Cell{" +
-            "height=" + height +
-            ", width=" + width +
-            ", type=" + type +
-            '}';
+        return "Cell{"
+            + "height=" + height
+            + ", width=" + width
+            + ", type=" + type
+            + '}';
     }
 
     public int getHeight() {

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-public class DFSGenerator implements Generator{
+public class DFSGenerator implements Generator {
     @Override
     public Maze generate(int height, int width) {
         var maze = new Maze(height, width);
@@ -107,7 +107,7 @@ public class DFSGenerator implements Generator{
 
         for (int i = 0; i < maze.getHeight(); ++i) {
             for (int j = 0; j < maze.getWidth(); ++j) {
-                if (i % 2 == 0 && j % 2 == 0){
+                if (i % 2 == 0 && j % 2 == 0) {
                     mazeArray[i][j].setType(Cell.Type.Passage);
                 } else {
                     mazeArray[i][j].setType(Cell.Type.Wall);
