@@ -84,8 +84,13 @@ public class SearchNode {
         return heightDistance + widthDistance;
     }
 
-    public int setPriority(Cell goal) {
+    public int setPriorityAStar(Cell goal) {
         priority = depth + getManhattanDistance(goal);
+        return priority;
+    }
+
+    public int setPriorityGreedy(Cell goal) {
+        priority = getManhattanDistance(goal);
         return priority;
     }
 
