@@ -9,10 +9,14 @@ import java.util.Objects;
 public class SearchNode {
     private final Cell cell;
     private final SearchNode parent;
-    private int depth;
+    private final int depth;
     private int priority;
 
     public SearchNode(Cell cell, SearchNode parent, int depth) {
+        if (cell == null) {
+            throw new IllegalArgumentException("Null cell");
+        }
+
         this.cell = cell;
         this.parent = parent;
         this.depth = depth;
@@ -23,6 +27,10 @@ public class SearchNode {
     }
 
     public List<SearchNode> findNeighbors(Maze maze) {
+        if (maze == null) {
+            return null;
+        }
+
         var neighbors = new ArrayList<SearchNode>();
         Cell currentNeighbor;
 
@@ -77,7 +85,7 @@ public class SearchNode {
         return cell.equals(goal);
     }
 
-    public int getManhattanDistance(Cell goal) {
+    private int getManhattanDistance(Cell goal) {
         int heightDistance = Math.abs(cell.getHeight() - goal.getHeight());
         int widthDistance = Math.abs(cell.getWidth() - goal.getWidth());
 
