@@ -8,6 +8,9 @@ public class Cell {
     private Type type;
 
     public Cell(int height, int width, Type type) {
+        if (height < 0 || width < 0 || type == null) {
+            throw new IllegalArgumentException("Wrong arguments!");
+        }
         this.height = height;
         this.width = width;
         this.type = type;
@@ -19,7 +22,9 @@ public class Cell {
     }
 
     public void setType(Type type) {
-        this.type = type;
+        if (type != null) {
+            this.type = type;
+        }
     }
 
     @Override public boolean equals(Object other) {
