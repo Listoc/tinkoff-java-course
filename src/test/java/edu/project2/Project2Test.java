@@ -1,14 +1,16 @@
 package edu.project2;
 
+import edu.project2.Printer.PrettyPrinter;
+import edu.project2.generator.DFSGenerator;
 import edu.project2.model.Cell;
 import edu.project2.model.Maze;
 import edu.project2.solver.ASolver;
+import edu.project2.solver.BFSSolver;
 import edu.project2.solver.DFSSolver;
 import edu.project2.solver.GreedySolver;
 import edu.project2.solver.Solver;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import edu.project2.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -85,7 +87,7 @@ public class Project2Test {
                 Arguments.of(new DFSSolver()),
                 Arguments.of(new ASolver()),
                 Arguments.of(new GreedySolver()),
-                Arguments.of(new DFSSolver())
+                Arguments.of(new BFSSolver())
             };
         }
 
@@ -99,6 +101,38 @@ public class Project2Test {
         @MethodSource("solvers")
         void wrongMaze(Solver solver) {
             assertThat(solver.solve(badMaze, 0, 0, 2, 4)).isNull();
+        }
+    }
+
+    @Nested
+    public class MazeTest {
+        @Test
+        void wrongInput() {
+            assertThatThrownBy(() -> new Maze(-1, -1)).isInstanceOf(IllegalArgumentException.class);
+        }
+    }
+
+    @Nested
+    public class CellTest {
+        @Test
+        void wrongInput() {
+            assertThatThrownBy(() -> new Cell(-1, -1, null)).isInstanceOf(IllegalArgumentException.class);
+        }
+    }
+
+    @Nested
+    public class GeneratorTest {
+        @Test
+        void wrongInput() {
+            assertThatThrownBy(() -> new DFSGenerator().generate(-1, -1)).isInstanceOf(IllegalArgumentException.class);
+        }
+    }
+
+    @Nested
+    public class PrinterTest {
+        @Test
+        void wrongInput() {
+            assertThatThrownBy(() -> new PrettyPrinter().printMaze(null)).isInstanceOf(IllegalArgumentException.class);
         }
     }
 }
