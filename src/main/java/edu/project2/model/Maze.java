@@ -49,6 +49,10 @@ public class Maze {
     }
 
     public Cell getCell(int height, int width) {
+        if (height < 0 || width < 0 || height > this.height - 1 || width > this.width - 1) {
+            return null;
+        }
+
         return mazeArray[height][width];
     }
 }
