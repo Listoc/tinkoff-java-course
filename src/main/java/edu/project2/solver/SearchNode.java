@@ -10,6 +10,7 @@ public class SearchNode {
     private final Cell cell;
     private final SearchNode parent;
     private int depth;
+    private int priority;
 
     public SearchNode(Cell cell, SearchNode parent, int depth) {
         this.cell = cell;
@@ -68,8 +69,24 @@ public class SearchNode {
         return depth;
     }
 
+    public int getPriority() {
+        return priority;
+    }
+
     public boolean isGoal(Cell goal) {
         return cell.equals(goal);
+    }
+
+    public int getManhattanDistance(Cell goal) {
+        int heightDistance = Math.abs(cell.getHeight() - goal.getHeight());
+        int widthDistance = Math.abs(cell.getWidth() - goal.getWidth());
+
+        return heightDistance + widthDistance;
+    }
+
+    public int setPriority(Cell goal) {
+        priority = depth + getManhattanDistance(goal);
+        return priority;
     }
 
     @Override public boolean equals(Object other) {
