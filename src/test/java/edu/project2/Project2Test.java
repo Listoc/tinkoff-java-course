@@ -102,6 +102,18 @@ public class Project2Test {
         void wrongMaze(Solver solver) {
             assertThat(solver.solve(badMaze, 0, 0, 2, 4)).isNull();
         }
+
+        @ParameterizedTest
+        @MethodSource("solvers")
+        void wrongCells(Solver solver) {
+            assertThat(solver.solve(properMaze, 1, 1, 2, 4)).isNull();
+        }
+
+        @ParameterizedTest
+        @MethodSource("solvers")
+        void wrongInput(Solver solver) {
+            assertThat(solver.solve(properMaze, -1, -1, -1, -1)).isNull();
+        }
     }
 
     @Nested
