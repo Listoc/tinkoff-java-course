@@ -156,4 +156,12 @@ public class Project2Test {
             assertThatThrownBy(() -> new PrettyPrinter().printMaze(null)).isInstanceOf(IllegalArgumentException.class);
         }
     }
+
+    @Nested
+    public class RunnerTest {
+        @Test
+        void wrongInput() {
+            assertThatThrownBy(() -> new Runner(null, null, null)).isInstanceOf(IllegalArgumentException.class);
+        }
+    }
 }
