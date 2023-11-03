@@ -18,6 +18,10 @@ public class Runner {
     private final static int MIN_SIZE = 3;
 
     public Runner(Generator generator, Solver solver, Printer printer) {
+        if (generator == null || solver == null || printer == null) {
+            throw new IllegalArgumentException("Null input!");
+        }
+
         this.generator = generator;
         this.solver = solver;
         this.printer = printer;
