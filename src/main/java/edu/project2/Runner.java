@@ -1,6 +1,6 @@
 package edu.project2;
 
-import edu.project2.Printer.Printer;
+import edu.project2.printer.Printer;
 import edu.project2.generator.Generator;
 import edu.project2.model.Cell;
 import edu.project2.model.Maze;

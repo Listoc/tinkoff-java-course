@@ -1,4 +1,4 @@
-package edu.project2.Printer;
+package edu.project2.printer;
 
 import edu.project2.model.Cell;
 import edu.project2.model.Maze;

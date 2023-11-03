@@ -1,6 +1,6 @@
 package edu.project2;
 
-import edu.project2.Printer.PrettyPrinter;
+import edu.project2.printer.PrettyPrinter;
 import edu.project2.generator.DFSGenerator;
 import edu.project2.model.Cell;
 import edu.project2.model.Maze;
