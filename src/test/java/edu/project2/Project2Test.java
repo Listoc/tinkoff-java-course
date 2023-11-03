@@ -69,6 +69,15 @@ public class Project2Test {
             badMaze.getCell(1, 3).setType(Cell.Type.Wall);
             badMaze.getCell(1, 2).setType(Cell.Type.Wall);
 
+            /*
+            _________________
+            | . ### .  .  . |
+            | . ### . ### . |
+            | .  .  . ### . |
+            |######   ######|
+            |               |
+            ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+            */
             expected.add(properMaze.getCell(0, 0));
             expected.add(properMaze.getCell(1, 0));
             expected.add(properMaze.getCell(2, 0));
