@@ -223,12 +223,15 @@ public class Hw4Test {
     class Task15Test {
         @Test
         void properInput() {
-            assertThat(Hw4.getSummaryWeightOfAllAnimalsFromKToLAge(animalList, 5, 30)).isEqualTo(150);
+            var expected = new HashMap<Animal.Type, Integer>();
+            expected.put(Animal.Type.DOG, 150);
+            expected.put(Animal.Type.BIRD, 5);
+            assertThat(Hw4.getSummaryWeightOfAllAnimalsFromKToLAge(animalList, 1, 30)).containsAllEntriesOf(expected);
         }
 
         @Test
         void noSuchAnimals() {
-            assertThat(Hw4.getSummaryWeightOfAllAnimalsFromKToLAge(animalList, 1, 1)).isEqualTo(0);
+            assertThat(Hw4.getSummaryWeightOfAllAnimalsFromKToLAge(animalList, 1, 1)).isEqualTo(new HashMap<>());
         }
     }
 

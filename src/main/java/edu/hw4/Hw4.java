@@ -12,27 +12,41 @@ public class Hw4 {
 
     //Task1
     public static List<Animal> sortByHeightAsc(List<Animal> animalsList) {
-        return animalsList.stream().sorted(Comparator.comparingInt(Animal::height)).toList();
+        return animalsList
+            .stream()
+            .sorted(Comparator.comparingInt(Animal::height))
+            .toList();
     }
 
     //Task2
     public static List<Animal> sortByWeightDesc(List<Animal> animalsList, int k) {
-        return animalsList.stream().sorted(Comparator.comparingInt(Animal::weight).reversed()).limit(k).toList();
+        return animalsList
+            .stream()
+            .sorted(Comparator.comparingInt(Animal::weight).reversed())
+            .limit(k)
+            .toList();
     }
 
     //Task3
     public static Map<Animal.Type, Long> countAnimalsByType(List<Animal> animalsList) {
-        return animalsList.stream().collect(Collectors.groupingBy(Animal::type, Collectors.counting()));
+        return animalsList
+            .stream()
+            .collect(Collectors.groupingBy(Animal::type, Collectors.counting()));
     }
 
     //Task4
     public static Animal getAnimalWithLongestName(List<Animal> animalsList) {
-        return animalsList.stream().max(Comparator.comparingInt((Animal a) -> a.name().length())).orElseThrow();
+        return animalsList
+            .stream()
+            .max(Comparator.comparingInt((Animal a) -> a.name().length()))
+            .orElseThrow();
     }
 
     //Task5
     public static Animal.Sex getSexWithMostAnimals(List<Animal> animalsList) {
-        var map = animalsList.stream().collect(Collectors.groupingBy(Animal::sex, Collectors.counting()));
+        var map = animalsList
+            .stream()
+            .collect(Collectors.groupingBy(Animal::sex, Collectors.counting()));
 
         if (map.get(Animal.Sex.F) > map.get(Animal.Sex.M)) {
             return Animal.Sex.F;
@@ -60,52 +74,80 @@ public class Hw4 {
             return null;
         }
         return animalsList.stream()
-            .sorted(Comparator.comparingInt(Animal::age).reversed()).toArray(Animal[]::new)[k - 1];
+            .sorted(Comparator.comparingInt(Animal::age).reversed())
+            .skip(k - 1)
+            .findFirst()
+            .orElseThrow();
+
     }
 
     //Task8
     public static Optional<Animal> getHeaviestAnimalLowerThanKCm(List<Animal> animalsList, int k) {
-        return animalsList.stream().filter(a -> a.height() < k).max(Comparator.comparingInt(Animal::weight));
+        return animalsList
+            .stream()
+            .filter(a -> a.height() < k)
+            .max(Comparator.comparingInt(Animal::weight));
     }
 
     //Task9
     public static Integer getCountOfPaws(List<Animal> animalList) {
-        return animalList.stream().mapToInt(Animal::paws).sum();
+        return animalList
+            .stream()
+            .mapToInt(Animal::paws)
+            .sum();
     }
 
     //Task10
     public static List<Animal> getAnimalsPawsNotEqualsAge(List<Animal> animalList) {
-        return animalList.stream().filter((a) -> a.paws() != a.age()).toList();
+        return animalList
+            .stream()
+            .filter((a) -> a.paws() != a.age())
+            .toList();
     }
 
     //Task11
     public static List<Animal> getAnimalsThatBitesAndHeightOver100CM(List<Animal> animalList) {
-        return animalList.stream().filter((a) -> a.bites() && a.height() > MIN_HEIGHT).toList();
+        return animalList
+            .stream()
+            .filter((a) -> a.bites() && a.height() > MIN_HEIGHT)
+            .toList();
     }
 
     //Task12
     public static int getCountOfAnimalsWeightOverHeight(List<Animal> animalList) {
-        return (int) animalList.stream().filter((a) -> a.weight() > a.height()).count();
+        return (int) animalList
+            .stream()
+            .filter((a) -> a.weight() > a.height())
+            .count();
     }
 
     //Task13
     public static List<Animal> getAnimalsMoreThanTwoWordInName(List<Animal> animalList) {
-        return animalList.stream().filter((a) -> a.name().split(" ").length > 2).toList();
+        return animalList
+            .stream()
+            .filter((a) -> a.name().split(" ").length > 2)
+            .toList();
     }
 
     //Task14
     public static boolean isHereDogWithHeightOverKCM(List<Animal> animalList, int k) {
-        return animalList.stream().anyMatch((a) -> a.type() == Animal.Type.DOG && a.height() > k);
+        return animalList
+            .stream()
+            .anyMatch((a) -> a.type().equals(Animal.Type.DOG) && a.height() > k);
     }
 
     //Task15
-    public static int getSummaryWeightOfAllAnimalsFromKToLAge(List<Animal> animalList, int k, int l) {
-        return animalList.stream().filter((a) -> a.age() >= k && a.age() < l).mapToInt(Animal::weight).sum();
+    public static Map<Animal.Type, Integer> getSummaryWeightOfAllAnimalsFromKToLAge(List<Animal> animalList, int k, int l) {
+        return animalList
+            .stream()
+            .filter((a) -> a.age() >= k && a.age() < l)
+            .collect(Collectors.groupingBy(Animal::type, Collectors.summingInt(Animal::weight)));
     }
 
     //Task16
     public static List<Animal> sortByTypeThenSexThenName(List<Animal> animalList) {
-        return animalList.stream()
+        return animalList
+            .stream()
             .sorted(
                 Comparator.comparing(Animal::type)
                     .thenComparing(Animal::sex)
@@ -116,7 +158,8 @@ public class Hw4 {
 
     //Task17
     public static boolean doSpidersBitesOftenThenDogs(List<Animal> animalList) {
-        var map = animalList.stream()
+        var map = animalList
+            .stream()
             .filter(Animal::bites)
             .collect(
                 Collectors.groupingBy(Animal::type, Collectors.counting())
@@ -127,22 +170,12 @@ public class Hw4 {
 
     //Task18
     public static Animal getHeaviestFishFromAnimalsLists(List<List<Animal>> animalList) {
-        boolean found = false;
-        Animal max = new Animal("", Animal.Type.FISH, Animal.Sex.M, 1, 1, 0, false);
-        Optional<Animal> current;
-
-        for (var list : animalList) {
-            current = list.stream()
-                .filter((a) -> a.type() == Animal.Type.FISH)
-                .max(Comparator.comparingInt(Animal::weight));
-
-            if (current.isPresent() && current.get().weight() > max.weight()) {
-                max = current.get();
-                found = true;
-            }
-        }
-
-        return found ? max : null;
+        return animalList
+            .stream()
+            .flatMap((a) -> a.stream())
+            .filter((a) -> a.type().equals(Animal.Type.FISH))
+            .max(Comparator.comparingInt(Animal::weight))
+            .orElse(null);
     }
 
 
