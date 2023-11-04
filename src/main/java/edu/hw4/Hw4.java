@@ -137,7 +137,11 @@ public class Hw4 {
     }
 
     //Task15
-    public static Map<Animal.Type, Integer> getSummaryWeightOfAllAnimalsFromKToLAge(List<Animal> animalList, int k, int l) {
+    public static Map<Animal.Type, Integer> getSummaryWeightOfAllAnimalsFromKToLAgeByType(
+        List<Animal> animalList,
+        int k,
+        int l
+    ) {
         return animalList
             .stream()
             .filter((a) -> a.age() >= k && a.age() < l)
