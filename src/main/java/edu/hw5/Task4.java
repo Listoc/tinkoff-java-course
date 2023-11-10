@@ -8,8 +8,8 @@ public class Task4 {
             throw new IllegalArgumentException("Null input!");
         }
 
-        var pattern = Pattern.compile(".*[~!@#$%^&*|].*");
-        return pattern.matcher(password).matches();
+        var pattern = Pattern.compile("[~!@#$%^&*|]");
+        return pattern.matcher(password).find();
     }
 
 
