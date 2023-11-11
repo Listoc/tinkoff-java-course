@@ -8,6 +8,9 @@ import java.util.Optional;
 
 public class Task3 {
     public static Optional<LocalDate> parseDate(String string) {
+        if (string == null) {
+            throw new IllegalArgumentException("Null input!");
+        }
         var parser = new WordParser(new AgoParser(new FormatParser(null)));
         var result = parser.parse(string);
         if (result == null) {

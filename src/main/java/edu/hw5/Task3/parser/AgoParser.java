@@ -10,6 +10,9 @@ public class AgoParser extends AbstractParser implements Parser {
     }
 
     public LocalDate parse(String string) {
+        if (string == null) {
+            throw new IllegalArgumentException("Null input!");
+        }
         var split = string.split(" ");
 
         if (split.length != WORDS_COUNT) {
