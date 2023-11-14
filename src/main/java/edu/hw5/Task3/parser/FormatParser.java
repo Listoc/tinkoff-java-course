@@ -11,6 +11,10 @@ public class FormatParser extends AbstractParser implements Parser {
     }
 
     public LocalDate parse(String string) {
+        if (string == null) {
+            throw new IllegalArgumentException("Null input!");
+        }
+
         var formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         var formatter2 = DateTimeFormatter.ofPattern("yyyy-M-dd");
         var formatter3 = DateTimeFormatter.ofPattern("yyyy-MM-d");

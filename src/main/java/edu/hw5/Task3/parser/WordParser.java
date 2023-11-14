@@ -8,6 +8,10 @@ public class WordParser extends AbstractParser implements Parser {
     }
 
     public LocalDate parse(String string) {
+        if (string == null) {
+            throw new IllegalArgumentException("Null input!");
+        }
+
         LocalDate result = null;
 
         if (string.equals("tomorrow")) {
