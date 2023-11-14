@@ -4,12 +4,9 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.stream.Collectors;
+import java.time.temporal.ChronoUnit;
 
 public class Task1 {
-    private static final int MINUTES_IN_HOUR = 60;
-    private static final int MINUTES_IN_DAY = MINUTES_IN_HOUR * 24;
-
     public static Duration getAverageTime(String timeString) {
         if (timeString == null) {
             throw new IllegalArgumentException("Null input!");
@@ -19,15 +16,15 @@ public class Task1 {
             return null;
         }
 
-        int avg = timeString
+        var sum = timeString
             .lines()
-            .collect(Collectors.averagingInt(Task1::mapStringToMinutes))
-            .intValue();
+            .map(Task1::mapStringToDuration)
+            .reduce(Duration::plus);
 
-        return Duration.ofMinutes(avg);
+        return sum.orElseThrow().dividedBy(timeString.lines().count()).truncatedTo(ChronoUnit.MINUTES);
     }
 
-    private static int mapStringToMinutes(String string) {
+    private static Duration mapStringToDuration(String string) {
         var split = string.split(" - ");
         if (split.length != 2) {
             throw new IllegalArgumentException("Wrong format!");
@@ -48,11 +45,7 @@ public class Task1 {
             throw new IllegalArgumentException("Wrong dates order");
         }
 
-        int days = secondDate.getDayOfMonth() - firstDate.getDayOfMonth();
-        int hours = secondDate.getHour() - firstDate.getHour();
-        int minutes = secondDate.getMinute() - firstDate.getMinute();
-
-        return days * MINUTES_IN_DAY + hours * MINUTES_IN_HOUR + minutes;
+        return Duration.between(firstDate, secondDate);
     }
 
     private static boolean isDatesCorrect(LocalDateTime first, LocalDateTime second) {

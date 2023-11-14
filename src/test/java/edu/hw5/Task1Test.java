@@ -16,14 +16,14 @@ public class Task1Test {
                 2022-03-12, 20:20 - 2022-03-12, 23:50
                 2022-04-01, 21:30 - 2022-04-02, 01:20
                 """,
-                3 * 60 + 40),
+                Duration.ofMinutes(3 * 60 + 40)),
             Arguments.of(
                 """
                 2022-03-12, 20:20 - 2022-03-12, 23:50
                 2022-04-01, 21:30 - 2022-04-02, 01:20
                 2022-04-02, 21:30 - 2022-04-03, 00:00
                 """,
-                3 * 60 + 16
+                Duration.ofMinutes(3 * 60 + 16)
             ),
             Arguments.of(
                 """
@@ -31,27 +31,27 @@ public class Task1Test {
                 2022-04-01, 21:30 - 2022-04-02, 01:20
                 2022-04-02, 21:30 - 2022-04-05, 21:30
                 """,
-                1 * 24 * 60 + 2 * 60 + 26
+                Duration.ofMinutes(1 * 24 * 60 + 2 * 60 + 26)
             ),
             Arguments.of(
                 """
                 2022-03-12, 20:20 - 2022-03-12, 23:50
                 """,
-                3 * 60 + 30
+                Duration.ofMinutes(3 * 60 + 30)
             ),
             Arguments.of(
                 """
                 2022-03-12, 20:20 - 2022-03-12, 20:20
                 """,
-                0
+                Duration.ofMinutes(0)
             )
         };
     }
 
     @ParameterizedTest
     @MethodSource("properInputs")
-    void properInput(String timeStrings, int expectedMinutes) {
-        assertThat(Task1.getAverageTime(timeStrings)).isEqualTo(Duration.ofMinutes(expectedMinutes));
+    void properInput(String timeStrings, Duration expected) {
+        assertThat(Task1.getAverageTime(timeStrings)).isEqualTo(expected);
     }
 
     @Test
