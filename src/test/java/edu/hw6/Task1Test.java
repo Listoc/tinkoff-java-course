@@ -2,18 +2,28 @@ package edu.hw6;
 
 import edu.hw6.task1.DiskMap;
 import org.assertj.core.data.MapEntry;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class Task1Test {
+    @AfterAll
+    @BeforeAll
+    static void clear() throws IOException {
+        Files.deleteIfExists(Path.of("vault.txt"));
+    }
+
     @Test
     void putTest() {
         var map = new DiskMap();
