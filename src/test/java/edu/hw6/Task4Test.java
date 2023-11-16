@@ -1,11 +1,8 @@
 package edu.hw6;
 
-import edu.hw6.task2.ClonerUtil;
 import edu.hw6.task4.Task4;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.BufferedReader;
 import java.io.FileReader;
