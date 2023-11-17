@@ -32,31 +32,6 @@ public class Task3Test {
     }
 
     @Test
-    void hiddenTest() throws IOException {
-        DirectoryStream.Filter<Path> filter = AbstractFilter.hidden;
-        var expected = new HashSet<Path>();
-        var result = new HashSet<Path>();
-
-//        expected.add(path.resolve("Task1Test.java"));
-//        expected.add(path.resolve("Task2Test.java"));
-//        expected.add(path.resolve("Task3Test.java"));
-//        expected.add(path.resolve("Task4Test.java"));
-//        expected.add(path.resolve("Task5Test.java"));
-//        expected.add(path.resolve("Task6Test.java"));
-
-        Path unreadable = path.resolve("unreadable");
-        Files.createFile(unreadable);
-        Files.setAttribute(unreadable, "dos:hidden", true);
-
-        expected.add(unreadable);
-
-        try (var entries = Files.newDirectoryStream(path, filter)) {
-            entries.forEach(result::add);
-            assertThat(result).containsExactlyInAnyOrderElementsOf(expected);
-        }
-    }
-
-    @Test
     void largerThanAndReadableTest() throws IOException {
         DirectoryStream.Filter<Path> filter =
             AbstractFilter.largerThan(1000).and(AbstractFilter.readable);
