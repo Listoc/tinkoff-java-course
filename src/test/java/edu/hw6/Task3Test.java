@@ -34,7 +34,7 @@ public class Task3Test {
     @Test
     void largerThanAndReadableTest() throws IOException {
         DirectoryStream.Filter<Path> filter =
-            AbstractFilter.largerThan(1000).and(AbstractFilter.readable);
+            AbstractFilter.largerThan(1200).and(AbstractFilter.readable);
         var expected = new HashSet<Path>();
         var result = new HashSet<Path>();
 
@@ -63,6 +63,7 @@ public class Task3Test {
         expected.add(path.resolve("Task3Test.java"));
         expected.add(path.resolve("Task4Test.java"));
         expected.add(path.resolve("Task5Test.java"));
+        expected.add(path.resolve("Task6Test.java"));
 
         try (var entries = Files.newDirectoryStream(path, filter)) {
             entries.forEach(result::add);
