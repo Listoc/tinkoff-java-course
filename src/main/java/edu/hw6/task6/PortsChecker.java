@@ -23,21 +23,39 @@ public class PortsChecker {
         SERVICES_BY_PORTS.put(5355, "LLMNR");
     }
 
-    public static void getPorts() {
+    public static void getPorts(int startPort, int endPort) {
+        if (startPort > endPort || startPort < 0 || endPort > 49151) {
+            throw new IllegalArgumentException();
+        }
+
+        String serviceName;
+
         System.out.println("Протокол Порт  Сервис");
-        for (var port : SERVICES_BY_PORTS.keySet()) {
+        for (int port = startPort; port < endPort + 1; ++port) {
             try (var ignored = new ServerSocket(port)) {
                 System.out.printf("%-8s %d\n", "TCP", port);
             } catch (Exception e) {
-                System.out.printf("%-8s %-5d %s\n", "TCP", port, SERVICES_BY_PORTS.get(port));
+                serviceName = SERVICES_BY_PORTS.get(port);
+                serviceName = serviceName == null ? "Undefined" : serviceName;
+                System.out.printf("%-8s %-5d %s\n", "TCP", port, serviceName);
             }
 
             try (var ignored = new DatagramSocket(port)) {
                 System.out.printf("%-8s %d\n", "UDP", port);
             } catch (Exception e) {
-                System.out.printf("%-8s %-5d %s\n", "UDP", port, SERVICES_BY_PORTS.get(port));
+                serviceName = SERVICES_BY_PORTS.get(port);
+                serviceName = serviceName == null ? "Undefined" : serviceName;
+                System.out.printf("%-8s %-5d %s\n", "UDP", port, serviceName);
             }
         }
+    }
+
+    public static void getPorts() {
+        getPorts(0, 49151);
+    }
+
+    public static void getPorts(int startPort) {
+        getPorts(startPort, 49151);
     }
 
     private PortsChecker() {}
