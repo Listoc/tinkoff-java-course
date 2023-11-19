@@ -1,14 +1,5 @@
 package edu.project3;
 
-import edu.project2.printer.PrettyPrinter;
-import edu.project2.generator.DFSGenerator;
-import edu.project2.model.Cell;
-import edu.project2.model.Maze;
-import edu.project2.solver.ASolver;
-import edu.project2.solver.BFSSolver;
-import edu.project2.solver.DFSSolver;
-import edu.project2.solver.GreedySolver;
-import edu.project2.solver.Solver;
 import edu.project3.analyzer.MyLogAnalyzer;
 import edu.project3.model.Log;
 import edu.project3.model.LogReport;
@@ -30,9 +21,7 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
