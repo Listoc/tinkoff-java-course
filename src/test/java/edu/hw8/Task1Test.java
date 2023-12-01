@@ -12,7 +12,7 @@ public class Task1Test {
         var server = new MyServer(101, 6);
         var threadServer = new Thread(server::start);
         threadServer.start();
-        Thread.sleep(1000);
+        Thread.sleep(5000);
         var client = new MyClient(101);
 
         assertThat(client.getQuote("глупый"))
@@ -24,7 +24,7 @@ public class Task1Test {
         var server = new MyServer(100, 2);
         var threadServer = new Thread(server::start);
         threadServer.start();
-        Thread.sleep(1000);
+        Thread.sleep(5000);
         var client1 = new MyClient(100);
         var client2 = new MyClient(100);
         var client3 = new MyClient(100);

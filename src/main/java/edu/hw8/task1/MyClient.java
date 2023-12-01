@@ -13,7 +13,7 @@ public class MyClient {
 
     public String getQuote(String word) {
         try (
-            var socket = new Socket("localhost", port);
+            var socket = new Socket("127.0.0.1", port);
             var inputStream = socket.getInputStream();
             var outputStream = socket.getOutputStream()
         ) {
