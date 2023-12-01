@@ -9,11 +9,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class Task1Test {
     @Test
     void oneClientTest() throws InterruptedException {
-        var server = new MyServer(101, 6);
+        var server = new MyServer(49952, 6);
         var threadServer = new Thread(server::start);
         threadServer.start();
-        Thread.sleep(5000);
-        var client = new MyClient(101);
+        Thread.sleep(2000);
+        var client = new MyClient(49952);
 
         assertThat(client.getQuote("глупый"))
             .isEqualTo("А я тебе говорил, что ты глупый? Так вот, я забираю свои слова обратно... Ты просто бог идиотизма");
@@ -21,15 +21,15 @@ public class Task1Test {
 
     @Test
     void multiClientTest() throws InterruptedException {
-        var server = new MyServer(100, 2);
+        var server = new MyServer(49953, 2);
         var threadServer = new Thread(server::start);
         threadServer.start();
-        Thread.sleep(5000);
-        var client1 = new MyClient(100);
-        var client2 = new MyClient(100);
-        var client3 = new MyClient(100);
-        var client4 = new MyClient(100);
-        var client5 = new MyClient(100);
+        Thread.sleep(2000);
+        var client1 = new MyClient(49953);
+        var client2 = new MyClient(49953);
+        var client3 = new MyClient(49953);
+        var client4 = new MyClient(49953);
+        var client5 = new MyClient(49953);
         var listOfThread = List.of(
             new Thread(() -> client1.getQuote("глупый")),
             new Thread(() -> client2.getQuote("глупый")),
