@@ -31,27 +31,28 @@ public class ClonerUtil {
     }
 
     private static MyFile parseFile(@NotNull Path path) {
-        var split = path.getFileName().toString().split("\\.");
-        String ending = "";
-        StringBuilder builder = new StringBuilder();
-        String fileName;
-
-        if (split.length != 1) {
-            ending = "." + split[split.length - 1];
-
-            for (int i = 0; i < split.length - 1; ++i) {
-                builder.append(split[i]);
-                if (i != split.length - 2) {
-                    builder.append(".");
-                }
-            }
-
-            fileName = builder.toString();
-        } else {
-            fileName = split[0];
+        if (path.getFileName() == null) {
+            throw new IllegalArgumentException("Can't get file name");
         }
 
-        return new MyFile(fileName, ending);
+        String postfix = "";
+        var prefixBuilder = new StringBuilder();
+        var fileNameString = path.getFileName().toString();
+        var fileNameArray = fileNameString.toCharArray();
+
+        for (var ch : fileNameArray) {
+            if (ch == '.') {
+                break;
+            }
+
+            prefixBuilder.append(ch);
+        }
+
+        if (prefixBuilder.length() != fileNameString.length()) {
+            postfix = fileNameString.substring(prefixBuilder.length());
+        }
+
+        return new MyFile(prefixBuilder.toString(), postfix);
     }
 
     private ClonerUtil() {}

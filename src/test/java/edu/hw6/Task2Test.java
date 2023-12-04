@@ -19,6 +19,9 @@ public class Task2Test {
         Files.deleteIfExists(Path.of("test.txt"));
         Files.deleteIfExists(Path.of("test - копия.txt"));
         Files.deleteIfExists(Path.of("test - копия (2).txt"));
+        Files.deleteIfExists(Path.of("test.mobi.fb2"));
+        Files.deleteIfExists(Path.of("test - копия.mobi.fb2"));
+        Files.deleteIfExists(Path.of("test - копия (2).mobi.fb2"));
         Files.deleteIfExists(Path.of("test - копия (3).txt"));
         Files.deleteIfExists(Path.of("test"));
         Files.deleteIfExists(Path.of("test - копия"));
@@ -56,6 +59,15 @@ public class Task2Test {
         ClonerUtil.cloneFile(path);
         var result = ClonerUtil.cloneFile(path);
         assertThat(result).isEqualTo(Path.of("test - копия (2).txt"));
+    }
+
+    @Test
+    void twoDotsSecondCopyTest() throws IOException {
+        var path = Path.of("test.mobi.fb2");
+        ClonerUtil.cloneFile(path);
+        ClonerUtil.cloneFile(path);
+        var result = ClonerUtil.cloneFile(path);
+        assertThat(result).isEqualTo(Path.of("test - копия (2).mobi.fb2"));
     }
 
     @Test
