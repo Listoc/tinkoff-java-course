@@ -5,22 +5,23 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 public class HackerNews {
-    public static long[] hackerNewsTopStories() {
-        var request = HttpRequest.newBuilder(URI.create("https://hacker-news.firebaseio.com/v0/topstories.json")).GET().build();
+    private static final Pattern PATTERN = Pattern.compile("(\"title\":\"([^\"]*)\")");
 
-        try (var client = HttpClient.newHttpClient()) {
-            var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            String result = response.body();
-            return jsonToArray(result);
-        } catch (InterruptedException | IOException e) {
-            return new long[0];
-        }
+    public static long[] hackerNewsTopStories() {
+        var uri = URI.create("https://hacker-news.firebaseio.com/v0/topstories.json");
+
+        return jsonToArray(requestToHackers(uri));
     }
 
     private static long[] jsonToArray(String json) {
+        if (json == null) {
+            return new long[0];
+        }
+
         var tmp = json.substring(1, json.length() - 1);
         var split = tmp.split(",");
         long[] result = new long[split.length];
@@ -34,25 +35,29 @@ public class HackerNews {
 
     public static String news(long id) {
         var uri = URI.create("https://hacker-news.firebaseio.com/v0/item/" + id + ".json");
-        var request = HttpRequest.newBuilder(uri).GET().build();
 
-        try (var client = HttpClient.newHttpClient()) {
-            var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            return getArticleName(response.body());
-        } catch (IOException | InterruptedException e) {
-            return null;
-        }
+        return getArticleName(requestToHackers(uri));
     }
 
     private static String getArticleName(String json) {
        try {
-           var pattern = Pattern.compile("(\"title\":\"([^\"]*)\")");
-           var matcher = pattern.matcher(json);
+           var matcher = PATTERN.matcher(json);
            matcher.find();
            return matcher.group(2);
        } catch (IllegalStateException e) {
            return null;
        }
+    }
+
+    private static String requestToHackers(URI uri) {
+        var request = HttpRequest.newBuilder(uri).GET().build();
+
+        try (var client = HttpClient.newHttpClient()) {
+            var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            return response.body();
+        } catch (IOException | InterruptedException e) {
+            return null;
+        }
     }
 
     private HackerNews() {}
