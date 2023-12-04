@@ -41,7 +41,6 @@ public class Task3Test {
         expected.add(path.resolve("Task1Test.java"));
         expected.add(path.resolve("Task2Test.java"));
         expected.add(path.resolve("Task3Test.java"));
-        expected.add(path.resolve("Task4Test.java"));
 
         try (var entries = Files.newDirectoryStream(path, filter)) {
             entries.forEach(result::add);

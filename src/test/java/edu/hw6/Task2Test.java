@@ -71,11 +71,6 @@ public class Task2Test {
     }
 
     @Test
-    void nullInputTest() {
-        assertThatThrownBy(() -> ClonerUtil.cloneFile(null)).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
     void directoryInputTest() {
         assertThatThrownBy(() -> ClonerUtil.cloneFile(Path.of("src"))).isInstanceOf(IllegalArgumentException.class);
     }

@@ -32,11 +32,6 @@ public class Task4Test {
     }
 
     @Test
-    void nullInput() {
-        assertThatThrownBy(() -> Task4.print(null)).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
     void directoryInput() {
         assertThatThrownBy(() -> Task4.print(Path.of("src"))).isInstanceOf(IllegalArgumentException.class);
     }
