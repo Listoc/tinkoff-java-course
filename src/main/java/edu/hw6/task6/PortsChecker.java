@@ -27,7 +27,7 @@ public class PortsChecker {
 
     public static void getPorts(int startPort, int endPort) {
         if (startPort > endPort || startPort < 0 || endPort > 49151) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Wrong ports");
         }
 
         String serviceName;
