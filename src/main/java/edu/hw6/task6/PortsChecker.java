@@ -8,6 +8,8 @@ import java.util.Map;
 @SuppressWarnings({"MagicNumber", "MultipleStringLiterals", "RegexpSinglelineJava"})
 public class PortsChecker {
     private static final Map<Integer, String> SERVICES_BY_PORTS;
+    private static final int MIN_PORT = 0;
+    private static final int MAX_PORT = 49151;
 
     static {
         SERVICES_BY_PORTS = new LinkedHashMap<>();
@@ -31,31 +33,29 @@ public class PortsChecker {
         String serviceName;
 
         System.out.println("Протокол Порт  Сервис");
-        for (int port = startPort; port < endPort + 1; ++port) {
+        for (int port = startPort; port < endPort + 1; port++) {
             try (var ignored = new ServerSocket(port)) {
                 System.out.printf("%-8s %d\n", "TCP", port);
             } catch (Exception e) {
-                serviceName = SERVICES_BY_PORTS.get(port);
-                serviceName = serviceName == null ? "Undefined" : serviceName;
+                serviceName = SERVICES_BY_PORTS.getOrDefault(port, "Undefined");
                 System.out.printf("%-8s %-5d %s\n", "TCP", port, serviceName);
             }
 
             try (var ignored = new DatagramSocket(port)) {
                 System.out.printf("%-8s %d\n", "UDP", port);
             } catch (Exception e) {
-                serviceName = SERVICES_BY_PORTS.get(port);
-                serviceName = serviceName == null ? "Undefined" : serviceName;
+                serviceName = SERVICES_BY_PORTS.getOrDefault(port, "Undefined");
                 System.out.printf("%-8s %-5d %s\n", "UDP", port, serviceName);
             }
         }
     }
 
     public static void getPorts() {
-        getPorts(0, 49151);
+        getPorts(MIN_PORT, MAX_PORT);
     }
 
     public static void getPorts(int startPort) {
-        getPorts(startPort, 49151);
+        getPorts(startPort, MAX_PORT);
     }
 
     private PortsChecker() {}
