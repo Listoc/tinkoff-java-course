@@ -6,6 +6,7 @@ import java.nio.file.Path;
 
 @SuppressWarnings({"ConstantName", "MagicNumber"})
 public interface AbstractFilter extends DirectoryStream.Filter<Path> {
+    String NULL_MESSAGE = "Null string";
     AbstractFilter readable = Files::isReadable;
     AbstractFilter writable = Files::isWritable;
     AbstractFilter hidden = Files::isHidden;
@@ -14,35 +15,61 @@ public interface AbstractFilter extends DirectoryStream.Filter<Path> {
 
     static AbstractFilter largerThan(long size) {
         if (size < 0) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Negative size");
         }
         return (Path path) -> Files.size(path) > size;
     }
 
     static AbstractFilter globMatches(String str) {
         if (str == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(NULL_MESSAGE);
         }
-        return (Path path) -> path.getFileName().toString().endsWith(str.substring(1));
+
+        return (Path path) -> {
+            var fileName = path.getFileName();
+
+            if (fileName == null) {
+                return false;
+            }
+
+            return fileName.toString().endsWith(str.substring(1));
+        };
     }
 
     static AbstractFilter regexContains(String str) {
         if (str == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(NULL_MESSAGE);
         }
-        return (Path path) -> path.getFileName().toString().matches(str);
+
+        return (Path path) -> {
+            var fileName = path.getFileName();
+
+            if (fileName == null) {
+                return false;
+            }
+
+            return fileName.toString().matches(str);
+        };
     }
 
     static AbstractFilter magicNumber(int... bytes) {
         return (Path path) -> {
-            try {
-                var firstByte = Integer.toHexString(Files.readAllBytes(path)[0] & 0xff);
+            if (Files.isDirectory(path)) {
+                return false;
+            }
+
+            try (var reader = Files.newBufferedReader(path)) {
+                String firstByteHex;
+
+                firstByteHex = Integer.toHexString(reader.read() & 0xff);
+
                 for (var el : bytes) {
-                    if (Integer.toHexString(el & 0xff).equals(firstByte)) {
+                    if (Integer.toHexString(el & 0xff).equals(firstByteHex)) {
                         return true;
                     }
                 }
-            } catch (Exception ignored) { }
+            }
+
             return false;
         };
     }
