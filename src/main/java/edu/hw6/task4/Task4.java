@@ -1,5 +1,6 @@
 package edu.hw6.task4;
 
+import org.jetbrains.annotations.NotNull;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -12,9 +13,9 @@ import java.util.zip.CheckedOutputStream;
 
 public class Task4 {
 
-    public static void print(Path path) throws IOException {
-        if (path == null || Files.isDirectory(path)) {
-            throw new IllegalArgumentException();
+    public static void print(@NotNull Path path) throws IOException {
+        if (Files.isDirectory(path)) {
+            throw new IllegalArgumentException("Path to directory");
         }
 
         try (

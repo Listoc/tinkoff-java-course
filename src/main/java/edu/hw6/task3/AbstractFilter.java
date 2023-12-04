@@ -1,5 +1,6 @@
 package edu.hw6.task3;
 
+import org.jetbrains.annotations.NotNull;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,11 +21,7 @@ public interface AbstractFilter extends DirectoryStream.Filter<Path> {
         return (Path path) -> Files.size(path) > size;
     }
 
-    static AbstractFilter globMatches(String str) {
-        if (str == null) {
-            throw new IllegalArgumentException(NULL_MESSAGE);
-        }
-
+    static AbstractFilter globMatches(@NotNull String str) {
         return (Path path) -> {
             var fileName = path.getFileName();
 
@@ -36,11 +33,7 @@ public interface AbstractFilter extends DirectoryStream.Filter<Path> {
         };
     }
 
-    static AbstractFilter regexContains(String str) {
-        if (str == null) {
-            throw new IllegalArgumentException(NULL_MESSAGE);
-        }
-
+    static AbstractFilter regexContains(@NotNull String str) {
         return (Path path) -> {
             var fileName = path.getFileName();
 
@@ -74,7 +67,7 @@ public interface AbstractFilter extends DirectoryStream.Filter<Path> {
         };
     }
 
-    default AbstractFilter and(AbstractFilter other) {
+    default AbstractFilter and(@NotNull AbstractFilter other) {
         return entry -> accept(entry) && other.accept(entry);
     }
 }

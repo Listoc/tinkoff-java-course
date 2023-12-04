@@ -1,13 +1,14 @@
 package edu.hw6.task2;
 
+import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class ClonerUtil {
-    public static Path cloneFile(Path path) throws IOException {
-        if (path == null || Files.isDirectory(path)) {
-            throw new IllegalArgumentException();
+    public static Path cloneFile(@NotNull Path path) throws IOException {
+        if (Files.isDirectory(path)) {
+            throw new IllegalArgumentException("Path to directory");
         }
 
         if (!Files.exists(path)) {
@@ -29,7 +30,7 @@ public class ClonerUtil {
         return newFile;
     }
 
-    private static MyFile parseFile(Path path) {
+    private static MyFile parseFile(@NotNull Path path) {
         var split = path.getFileName().toString().split("\\.");
         String ending = "";
         StringBuilder builder = new StringBuilder();
