@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -81,23 +82,24 @@ public class DiskMap implements Map<String, String> {
     }
 
     public void writeToDisk() throws IOException {
-        try (var writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
+        try (var writer = new BufferedWriter(new FileWriter(FILE_NAME, StandardCharsets.UTF_8))) {
 
-            for (var key : map.keySet()) {
-                writer.write(key + ':' + map.get(key));
+            for (var entry : map.entrySet()) {
+                writer.append(entry.getKey()).append(':').append(entry.getValue());
                 writer.newLine();
             }
         }
     }
 
     public void readFromDisk() throws IOException {
-        try (var reader = new BufferedReader(new FileReader(FILE_NAME))) {
+        try (var reader = new BufferedReader(new FileReader(FILE_NAME, StandardCharsets.UTF_8))) {
             map.clear();
+            String line;
 
-            while (reader.ready()) {
-                var split = reader.readLine().split(":");
+            while ((line = reader.readLine()) != null) {
+                var split = line.split(":");
                 if (split.length != 2) {
-                    throw new IOException();
+                    throw new IOException("Incorrect data format, must be key:value in each line");
                 }
                 map.put(split[0], split[1]);
             }

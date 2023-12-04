@@ -10,6 +10,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -150,7 +151,7 @@ public class Task1Test {
         map.put("testKey2", "testValue2");
         map.writeToDisk();
 
-        try (var reader = new BufferedReader(new FileReader("vault.txt"))) {
+        try (var reader = new BufferedReader(new FileReader("vault.txt", StandardCharsets.UTF_8))) {
             while (reader.ready()) {
                 var split = reader.readLine().split(":");
                 hashMap.put(split[0], split[1]);
@@ -169,7 +170,7 @@ public class Task1Test {
         hashMap.put("testKey1", "testValue1");
         hashMap.put("testKey2", "testValue2");
 
-        try (var writer = new BufferedWriter(new FileWriter("vault.txt"))) {
+        try (var writer = new BufferedWriter(new FileWriter("vault.txt", StandardCharsets.UTF_8))) {
             for (var key : hashMap.keySet()) {
                 writer.write(key + ':' + hashMap.get(key));
                 writer.newLine();
@@ -190,7 +191,7 @@ public class Task1Test {
         hashMap.put("testKey1", "testValue1");
         hashMap.put("testKey2", "testValue2");
 
-        try (var writer = new BufferedWriter(new FileWriter("vault.txt"))) {
+        try (var writer = new BufferedWriter(new FileWriter("vault.txt", StandardCharsets.UTF_8))) {
             for (var key : hashMap.keySet()) {
                 writer.write(key);
                 writer.newLine();
