@@ -1,9 +1,10 @@
 package edu.hw6.task3;
 
-import org.jetbrains.annotations.NotNull;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.jetbrains.annotations.NotNull;
+
 
 @SuppressWarnings({"ConstantName", "MagicNumber"})
 public interface AbstractFilter extends DirectoryStream.Filter<Path> {

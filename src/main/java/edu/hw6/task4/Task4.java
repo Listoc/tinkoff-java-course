@@ -1,6 +1,5 @@
 package edu.hw6.task4;
 
-import org.jetbrains.annotations.NotNull;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -10,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.zip.CRC32;
 import java.util.zip.CheckedOutputStream;
+import org.jetbrains.annotations.NotNull;
 
 public class Task4 {
 

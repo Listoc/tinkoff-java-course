@@ -1,9 +1,9 @@
 package edu.hw6.task2;
 
-import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.jetbrains.annotations.NotNull;
 
 public class ClonerUtil {
     public static Path cloneFile(@NotNull Path path) throws IOException {
