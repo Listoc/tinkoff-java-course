@@ -52,15 +52,19 @@ public interface AbstractFilter extends DirectoryStream.Filter<Path> {
                 return false;
             }
 
+            int firstByte;
+
             try (var reader = Files.newBufferedReader(path)) {
-                String firstByteHex;
+                firstByte = reader.read();
+            }
 
-                firstByteHex = Integer.toHexString(reader.read() & 0xff);
+            if (firstByte == -1) {
+                return false;
+            }
 
-                for (var el : bytes) {
-                    if (Integer.toHexString(el & 0xff).equals(firstByteHex)) {
-                        return true;
-                    }
+            for (var el : bytes) {
+                if (el == firstByte) {
+                    return true;
                 }
             }
 
