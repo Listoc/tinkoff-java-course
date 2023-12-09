@@ -1,20 +1,21 @@
 package edu.hw9.task1;
 
-import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import org.jetbrains.annotations.NotNull;
 
 public class ParallelStatsCollector implements StatsCollector {
     private final List<Stats> listOfStats;
     private final ExecutorService threadPool;
+    private static final int THREADS_COUNT = 3;
 
     public ParallelStatsCollector() {
         listOfStats = Collections.synchronizedList(new LinkedList<>());
-        this.threadPool = Executors.newFixedThreadPool(3);
+        this.threadPool = Executors.newFixedThreadPool(THREADS_COUNT);
     }
 
     @Override
