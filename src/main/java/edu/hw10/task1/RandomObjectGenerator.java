@@ -15,7 +15,7 @@ public class RandomObjectGenerator implements ObjectGenerator {
     private final Random random = new Random();
 
     @Override
-    public Object nextObject(@NotNull Class<?> classObject) {
+    public Object nextObject(@org.jetbrains.annotations.NotNull Class<?> classObject) {
         Constructor<?> constructor = Arrays
             .stream(classObject.getConstructors())
             .max(Comparator.comparingInt(Constructor::getParameterCount))
@@ -31,7 +31,10 @@ public class RandomObjectGenerator implements ObjectGenerator {
     }
 
     @Override
-    public Object nextObject(@NotNull Class<?> classObject, @NotNull String factoryMethod) {
+    public Object nextObject(
+        @org.jetbrains.annotations.NotNull Class<?> classObject,
+        @org.jetbrains.annotations.NotNull String factoryMethod
+    ) {
         Method factory;
         factory = Arrays.stream(classObject.getMethods())
             .filter((m) -> m.getName().equals(factoryMethod))
